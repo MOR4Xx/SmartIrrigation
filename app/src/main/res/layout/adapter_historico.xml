@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/ligthtest"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Data: @{viewModel.historicoData.data}"/>
+
+    <TextView
+        android:id="@+id/hora"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Hora: @{viewModel.historicoData.hora}"/>
+
+    <TextView
+        android:id="@+id/qtd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Quantidade de Água: @{viewModel.historicoData.qtd}"/>
+
+    <TextView
+        android:id="@+id/modo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Modo: @{viewModel.historicoData.modo}"/>
+
+    <TextView
+        android:id="@+id/usuario"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textStyle="bold"
+        android:text="Usuário: @{viewModel.historicoData.usuario}"/>
+
+
+
+</LinearLayout>
