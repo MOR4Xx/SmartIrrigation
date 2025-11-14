@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
     kotlin("kapt")
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -42,6 +43,7 @@ android {
     buildFeatures {
         dataBinding = true //HABILITA O DATA BINDING
         viewBinding = true
+        compose = true
     }
 
     kotlin {
@@ -57,6 +59,16 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.annotation)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.activity)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -65,6 +77,10 @@ dependencies {
     implementation(libs.lifecycle.livedata.ktx)
     // Implementação do Runtime (necessário para escopo de coroutines, etc.)
     implementation(libs.lifecycle.runtime.ktx)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
     // O KAPT usa o lifecycle-compiler para gerar o código auxiliar do ViewModel e Data Binding.
     kapt(libs.lifecycle.compiler)
     implementation(platform("com.google.firebase:firebase-bom:33.5.1"))

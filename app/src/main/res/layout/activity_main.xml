@@ -14,7 +14,8 @@
         app:titleCentered="true"
         app:titleTextColor="@color/black"
         android:paddingTop="10dp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="5dp"
+        android:elevation="6dp"/>
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -31,6 +32,6 @@
         app:itemIconTint="@color/menu_colors"
         app:itemTextColor="@color/menu_colors"
         app:labelVisibilityMode="labeled"
-        android:background="?android:attr/windowBackground"/>
+        android:background="@color/ligthtest"/>
 </LinearLayout>
 

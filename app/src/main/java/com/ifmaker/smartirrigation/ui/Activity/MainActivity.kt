@@ -20,14 +20,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.activity_main)
 
         toolbar = findViewById(R.id.top_nav_bar)
         bottomNav = findViewById(R.id.bottom_navigation)
         setSupportActionBar(toolbar)
 
-
-        // 2) Inflar menu (ícone perfil) na toolbar
         toolbar.menu.clear()
         toolbar.inflateMenu(R.menu.top_bar)
 

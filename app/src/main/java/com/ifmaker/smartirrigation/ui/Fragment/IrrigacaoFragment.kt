@@ -32,6 +32,14 @@ class IrrigacaoFragment : Fragment() {
         val parametrosIrrigacao: LinearLayout = view.findViewById(R.id.card_parametros_irrigacao)
         val irrigacaoManual: LinearLayout = view.findViewById(R.id.card_irrigacao_manual)
 
+        irrigacaoManual.setVisibility(View.GONE)
+        parametrosIrrigacao.setVisibility(View.VISIBLE)
+        ativarIrri.setVisibility(View.VISIBLE)
+
+
+
+
+
         btnManual.setOnClickListener {
             btnAutomatico.background = ContextCompat.getDrawable(btnAutomatico.context, R.drawable.button_border)
             btnAutomatico.setTextColor(ContextCompat.getColor(btnAutomatico.context, R.color.blue))

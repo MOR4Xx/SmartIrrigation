@@ -10,9 +10,7 @@ object OptionMenuAdm {
             OptionMenu("Latitude do Sistema"),
             OptionMenu("Tipo de Platio"),
             OptionMenu("Adicionar Novo Usuario"),
-            OptionMenu("Notificações"),
             OptionMenu("Aparencia"),
-            OptionMenu("Idioma"),
             OptionMenu("Logout")
         )
     }
@@ -21,9 +19,7 @@ object OptionMenuAdm {
 object OptionMenuUser {
     fun getMenuList(): List<OptionMenu> {
         return listOf(
-            OptionMenu("Notificações"),
             OptionMenu("Aparencia"),
-            OptionMenu("Idioma"),
             OptionMenu("Logout")
         )
     }

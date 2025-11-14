@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".ui.Fragment.IrrigacaoFragment">
 
     <LinearLayout
@@ -16,29 +15,32 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
+            android:elevation="6dp"
             android:padding="10dp">
-
             <Button
-                android:id="@+id/btnmanual"
+                android:id="@+id/btnautomatico"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"
-                android:backgroundTint="@color/blue"
-                android:text="Manual"
+                android:backgroundTint="@color/invisivel"
+                android:text="Automático"
+                android:elevation="6dp"
                 android:textColor="@color/white" />
-
             <View
                 android:layout_width="10dp"
                 android:layout_height="1dp" />
 
             <Button
-                android:id="@+id/btnautomatico"
+                android:id="@+id/btnmanual"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_border"
                 android:backgroundTint="@color/invisivel"
-                android:text="Automático"
+                android:text="Manual"
+                android:elevation="6dp"
                 android:textColor="@color/blue" />
+
+
         </LinearLayout>
 
         <View
@@ -59,6 +61,7 @@
                 android:layout_marginRight="5dp"
                 android:background="@drawable/card"
                 android:orientation="vertical"
+                android:elevation="6dp"
                 android:padding="10dp">
 
                 <TextView
@@ -128,42 +131,6 @@
                 android:layout_height="5dp" />
 
             <LinearLayout
-                android:id="@+id/card_ativar_irrigacao"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/card"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Ativar Irrigação"
-                    android:textColor="@color/black"
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="15dp"
-                    android:layout_height="5dp" />
-
-                <Button
-                    android:id="@+id/btn_ativar_irrigacao"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/button"
-                    android:text="Ativar" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="5dp" />
-
-            <LinearLayout
                 android:id="@+id/card_parametros_irrigacao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -171,6 +138,7 @@
                 android:layout_marginRight="5dp"
                 android:background="@drawable/card"
                 android:orientation="vertical"
+                android:elevation="6dp"
                 android:padding="10dp">
 
                 <TextView
@@ -260,6 +228,43 @@
                 android:layout_height="5dp" />
 
             <LinearLayout
+                android:id="@+id/card_ativar_irrigacao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/card"
+                android:orientation="vertical"
+                android:elevation="6dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Ativar Irrigação"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="15dp"
+                    android:layout_height="5dp" />
+
+                <Button
+                    android:id="@+id/btn_ativar_irrigacao"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button"
+                    android:text="Ativar" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="5dp" />
+
+            <LinearLayout
                 android:id="@+id/card_irrigacao_manual"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -267,6 +272,7 @@
                 android:layout_marginRight="5dp"
                 android:background="@drawable/card"
                 android:orientation="vertical"
+                android:elevation="6dp"
                 android:padding="10dp">
 
                 <TextView
@@ -357,6 +363,10 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="5dp" />
     </LinearLayout>
 
 </FrameLayout>

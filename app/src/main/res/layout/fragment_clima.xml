@@ -1,32 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.Fragment.ClimaFragment"
-
     >
 
     <LinearLayout
+        android:id="@+id/info_clima"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:padding="10dp">
 
-<!--        <com.google.android.material.appbar.MaterialToolbar-->
-<!--            android:id="@+id/top_nav_clima"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="?attr/actionBarSize"-->
-<!--            android:background="@color/white"-->
-<!--            app:menu="@menu/top_bar"-->
-<!--            app:titleCentered="true"-->
-<!--            app:titleTextColor="@color/black"-->
-<!--            app:title="Clima"/>-->
+        <LinearLayout
+            android:id="@+id/info_umidade"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:background="@drawable/card_clima"
+            android:elevation="6dp"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:paddingTop="10dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Clima" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Umidade do Solo %"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/divider"
+                android:backgroundTint="@color/grey" />
+
+            <TextView
+                android:id="@+id/info_umidade_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="70%"
+                android:textAlignment="center"
+                android:textSize="25dp" />
+
+            <TextView
+                android:id="@+id/hist_umidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/historico"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/info_temperatura"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:background="@drawable/card_clima"
+            android:elevation="6dp"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Temperatura Ar C°"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/divider"
+                android:backgroundTint="@color/grey" />
+
+            <TextView
+                android:id="@+id/info_temperatura_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="35 C°"
+                android:textAlignment="center"
+                android:textSize="25dp" />
+
+            <TextView
+                android:id="@+id/hist_temperatura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/historico"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/info_umidade_ar"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:background="@drawable/card_clima"
+            android:elevation="6dp"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Umidade do Ar %"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/divider"
+                android:backgroundTint="@color/grey" />
+
+            <TextView
+                android:id="@+id/info_umidade_ar_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="52%"
+                android:textAlignment="center"
+                android:textSize="25dp" />
+
+            <TextView
+                android:id="@+id/hist_umidade_ar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/historico"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
