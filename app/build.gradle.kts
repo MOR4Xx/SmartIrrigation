@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.gms.google.services)
     kotlin("kapt")
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -41,7 +41,7 @@ android {
     }
 
     buildFeatures {
-        dataBinding = true //HABILITA O DATA BINDING
+        dataBinding = true
         viewBinding = true
         compose = true
     }
@@ -58,8 +58,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.firebase.firestore)
-    implementation(libs.firebase.auth)
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.activity.compose)
@@ -69,21 +67,16 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.activity)
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.lifecycle.viewmodel.ktx)
-    // Implementação do LiveData (observáveis)
     implementation(libs.lifecycle.livedata.ktx)
-    // Implementação do Runtime (necessário para escopo de coroutines, etc.)
     implementation(libs.lifecycle.runtime.ktx)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-    // O KAPT usa o lifecycle-compiler para gerar o código auxiliar do ViewModel e Data Binding.
     kapt(libs.lifecycle.compiler)
-    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
-    implementation("com.google.firebase:firebase-firestore-ktx")
-
 }

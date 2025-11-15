@@ -25,11 +25,11 @@ class HistoricoAdapter(
 
     override fun onBindViewHolder(holder: HistoricoViewHolder, position: Int) {
         val card = historicoList!![position]
-        holder.dataHistorico.text = card.data
-        holder.horaHistorico.text = card.hora
-        holder.qtd.text = toString(card.qtdAgua)
-        holder.modo.text = card.modo
-        holder.usr.text = card.usuario
+        holder.dataHistorico.text = "Data: ${card.data}"
+        holder.horaHistorico.text = "Hora: ${card.hora}"
+        holder.qtd.text = "Volume de água: ${ toString(card.qtdAgua) } L"
+        holder.modo.text = "Modo: ${card.modo}"
+        holder.usr.text = "Usuário: ${card.usuario}"
     }
 
     override fun getItemCount(): Int {

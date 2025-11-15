@@ -14,7 +14,6 @@
         app:titleCentered="true"
         app:titleTextColor="@color/black"
         android:paddingTop="10dp"
-        android:layout_marginBottom="5dp"
         android:elevation="6dp"/>
 
     <FrameLayout

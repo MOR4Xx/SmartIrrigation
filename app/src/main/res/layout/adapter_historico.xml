@@ -3,8 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/ligthtest"
-    android:padding="10dp">
+    android:background="@drawable/card"
+    android:padding="10dp"
+    android:layout_marginVertical="5dp"
+    android:layout_marginHorizontal="5dp"
+    android:elevation="5dp">
 
     <TextView
         android:id="@+id/data"

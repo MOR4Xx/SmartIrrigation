@@ -9,7 +9,7 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.ifmaker.smartirrigation" />
-                  <option name="mobileSdkAppId" value="1:429510905003:android:e965f2347253730f6afbee" />
+                  <option name="mobileSdkAppId" value="1:429510905003:android:aead41ecb22084616afbee" />
                   <option name="projectId" value="smart-irrigation-ifmaker" />
                   <option name="projectNumber" value="429510905003" />
                 </ConnectionSetting>

@@ -7,26 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:429510905003:android:bf56ee75d95b10bf6afbee",
-        "android_client_info": {
-          "package_name": "com.example.irrigacaointeligente"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB1G2-Z_lL23E2MVbwyp6oud_F7tyOjBmM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:429510905003:android:e965f2347253730f6afbee",
+        "mobilesdk_app_id": "1:429510905003:android:aead41ecb22084616afbee",
         "android_client_info": {
           "package_name": "com.ifmaker.smartirrigation"
         }
