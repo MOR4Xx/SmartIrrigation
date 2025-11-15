@@ -21,20 +21,22 @@ class HistoricoViewModel: ViewModel() {
     }
     fun carregar() {
         Log.d("Arrumando saporra", "carregando dados")
-        CoroutineScope(viewModelScope.coroutineContext).launch {
-           Log.d("Arrumando saporra", "carregando dados 2")
-            Log.d("Arrumando saporra", repo.getHistorico().toString())
-        }
 
-        listHistorico.postValue(repo.getHistorico())
-//        viewModelScope.launch {
-//            val teste = listOf(
-//                Historico("10/10/2024", "12:00", 10.0, "Automático", "Jorge"),
-//                Historico("11/10/2024", "15:00", 5.0, "Manual", "Erick"),
-//                Historico("12/10/2024", "18:00", 7.5, "Automático", "Jorge")
-//            )
-//
-//            listHistorico.postValue(teste)
-//        }
+        viewModelScope.launch {
+            try {
+                Log.d("Arrumando saporra", "buscando dados no firebase...")
+
+                // 1. Chamamos a função suspend (o código "espera" aqui sem travar o app)
+                val historico = repo.getHistorico()
+
+                Log.d("Arrumando saporra", "dados recebidos: $historico")
+
+                // 2. Atualizamos o LiveData com o resultado
+                listHistorico.value = historico // Dentro do main thread (viewModelScope) pode usar .value
+
+            } catch (e: Exception) {
+                Log.e("Arrumando saporra", "Erro ao buscar histórico", e)
+            }
+        }
     }
 }

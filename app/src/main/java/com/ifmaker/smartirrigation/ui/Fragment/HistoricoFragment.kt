@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment // Import de Fragment
+import androidx.fragment.app.viewModels // <--- IMPORTANTE: Use este import para Fragments
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ifmaker.smartirrigation.databinding.FragmentHistoricoBinding
 import com.ifmaker.smartirrigation.ui.Adapter.HistoricoAdapter
@@ -15,9 +15,11 @@ class HistoricoFragment : Fragment() {
 
     private var _binding: FragmentHistoricoBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: HistoricoAdapter
 
-    private lateinit var viewModel: HistoricoViewModel
+    // Apenas declare a variavel. Não inicialize manualmente depois.
+    private val viewModel: HistoricoViewModel by viewModels()
+
+    private lateinit var adapter: HistoricoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +33,7 @@ class HistoricoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Configuração do Adapter
         adapter = HistoricoAdapter(emptyList(), requireContext())
 
         binding.listaHistorico.apply {
@@ -38,8 +41,10 @@ class HistoricoFragment : Fragment() {
             adapter = this@HistoricoFragment.adapter
         }
 
-        viewModel = ViewModelProvider(this).get(HistoricoViewModel::class.java)
+        // --- LINHA REMOVIDA AQUI (O erro estava aqui) ---
+        // viewModel = ViewModelProvider(this).get(HistoricoViewModel::class.java)
 
+        // Observando os dados
         viewModel.listHistorico.observe(viewLifecycleOwner) { lista ->
             adapter.updateList(lista)
         }
@@ -50,4 +55,3 @@ class HistoricoFragment : Fragment() {
         _binding = null
     }
 }
-

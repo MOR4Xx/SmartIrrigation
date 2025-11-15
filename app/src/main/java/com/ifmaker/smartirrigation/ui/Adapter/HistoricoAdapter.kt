@@ -27,7 +27,7 @@ class HistoricoAdapter(
         val card = historicoList!![position]
         holder.dataHistorico.text = "Data: ${card.data}"
         holder.horaHistorico.text = "Hora: ${card.hora}"
-        holder.qtd.text = "Volume de água: ${ toString(card.qtdAgua) } L"
+        holder.qtd.text = "Volume de água: ${ toString(card.quantidade) } L"
         holder.modo.text = "Modo: ${card.modo}"
         holder.usr.text = "Usuário: ${card.usuario}"
     }
