@@ -10,7 +10,7 @@
         android:id="@+id/top_nav_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/ligthtest"
+        android:background="@color/invisivel"
         app:titleCentered="true"
         app:titleTextColor="@color/black"
         android:paddingTop="10dp"
@@ -31,6 +31,6 @@
         app:itemIconTint="@color/menu_colors"
         app:itemTextColor="@color/menu_colors"
         app:labelVisibilityMode="labeled"
-        android:background="@color/ligthtest"/>
+        android:background="@color/medium"/>
 </LinearLayout>
 

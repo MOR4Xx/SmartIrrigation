@@ -37,12 +37,10 @@ class MainActivity : AppCompatActivity() {
                     bottomNav.selectedItemId = R.id.nav_config
                     true
                 }
-
                 else -> false
             }
         }
 
-        // 3) Navegação inferior
         bottomNav.setOnItemSelectedListener { item ->
             onClickBottomNav(item)
         }

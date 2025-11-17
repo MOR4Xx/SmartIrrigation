@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ifmaker.smartirrigation.data.Model.Historico
-import com.ifmaker.smartirrigation.data.Model.HistoricoRepository
+import com.ifmaker.smartirrigation.data.Repository.HistoricoRepository
 import com.ifmaker.smartirrigation.ui.Adapter.HistoricoAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

@@ -337,10 +337,12 @@
                     <SeekBar
                         android:id="@+id/seekBarAgua"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:max="100"
-                        android:progress="50" />
+                        android:progress="50"
+                        android:outlineAmbientShadowColor="@color/blue"
+                        android:outlineSpotShadowColor="@color/blue"/>
 
                     <TextView
                         android:id="@+id/txtLitros"

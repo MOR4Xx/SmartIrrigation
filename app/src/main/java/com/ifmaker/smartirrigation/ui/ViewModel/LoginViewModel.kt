@@ -1,33 +1,43 @@
 package com.ifmaker.smartirrigation.ui.ViewModel
 
-
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
+import com.ifmaker.smartirrigation.data.Repository.UsuarioRepository
 
-class LoginViewModel: ViewModel() {
-    val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val _loginResult = MutableLiveData<Boolean>()
-    val loginResult: LiveData<Boolean> = _loginResult
+class CadastroViewModel : ViewModel() {
 
-    fun login(login: String, password: String) {
-        // login logic
-        val username = login
-    	val password = password
+    private val repo = UsuarioRepository()
 
-        auth.signInWithEmailAndPassword(username, password).addOnCompleteListener { task ->(
-            if (task.isSuccessful) {
-                // login success
-                Log.d("Login", "Login success")
-                _loginResult.value = true
+    val loading = MutableLiveData<Boolean>()
+    val errorMessage = MutableLiveData<String>()
+    val success = MutableLiveData<Boolean>()
+
+    fun cadastrarUsuario(
+        nome: String,
+        email: String,
+        senha: String,
+        confirmar: String,
+        permissao: String
+    ) {
+        if (nome.isBlank() || email.isBlank() || senha.isBlank()) {
+            errorMessage.value = "Preencha todos os campos"
+            return
+        }
+
+        if (senha != confirmar) {
+            errorMessage.value = "As senhas não coincidem"
+            return
+        }
+
+        loading.value = true
+
+        repo.cadastrarUsuario(nome, email, senha, permissao) { ok, erro ->
+            loading.value = false
+            if (ok) {
+                success.value = true
             } else {
-                // login failed
-                Log.d("Login", "Login failed")
-                _loginResult.value = false
+                errorMessage.value = erro ?: "Erro desconhecido"
             }
-        )}
+        }
     }
 }
