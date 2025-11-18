@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         setContentView(R.layout.activity_main)
 
         toolbar = findViewById(R.id.top_nav_bar)
@@ -45,9 +44,7 @@ class MainActivity : AppCompatActivity() {
             onClickBottomNav(item)
         }
 
-        // 4) Estado inicial
         if (savedInstanceState == null) {
-            // define fragment inicial sem adicionar ao back stack
             loadFragment(ClimaFragment())
             bottomNav.selectedItemId = R.id.nav_clima
             setToolbarTitle("Clima")
@@ -55,7 +52,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    // Chamada do BottomNavigationView
     private fun onClickBottomNav(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_historico -> {
@@ -84,12 +80,10 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    // Método público que fragments podem chamar para mudar título / mostrar seta
     fun setToolbarTitle(title: String) {
         supportActionBar?.title = title
     }
 
-    // Carrega fragment (passar addToBackStack=true para telas internas)
     fun loadFragment(fragment: Fragment) {
         val tx = supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)

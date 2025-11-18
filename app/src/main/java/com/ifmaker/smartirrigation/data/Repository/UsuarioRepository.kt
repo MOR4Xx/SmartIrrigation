@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ifmaker.smartirrigation.data.Model.Usuario
 
-class UsuarioRepository () {
+class UsuarioRepository() {
     val db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
     val collectionPath = "usuarios"
@@ -20,41 +20,69 @@ class UsuarioRepository () {
             }
     }
 
-    fun cadastrarUsuario(
-        nome: String,
-        email: String,
-        senha: String,
-        tipo: String,
-        callback: (Boolean, String?) -> Unit
-    ) {
-        Log.d("teste","usuario cadastrado")
-        auth.createUserWithEmailAndPassword(email, senha)
-            .addOnSuccessListener { result ->
+    fun getPermissao(callback: (String?) -> Unit) {
+        val uid = auth.currentUser?.uid
 
-                val uid = result.user?.uid ?: return@addOnSuccessListener
-
-                val usuario = Usuario(
-                    uid = uid,
-                    nome = nome,
-                    email = email,
-                    tipo = tipo
-                )
-
-                db.collection("usuarios")
-                    .document(uid)
-                    .set(usuario)
-                    .addOnSuccessListener {
-                        callback(true, null)
-                    }
-                    .addOnFailureListener { e ->
-                        callback(false, e.localizedMessage)
-                    }
+        db.collection("usuarios")
+            .document(uid.toString())
+            .get()
+            .addOnSuccessListener { document ->
+                val permissao = document.getString("tipo")
+                callback(permissao.toString())
             }
-            .addOnFailureListener { e ->
-                callback(false, e.localizedMessage)
+            .addOnFailureListener {
+                callback("Erro ao obter permissão")
+            }
+    }
+
+    fun getNomeUsuario(callback: (String?) -> Unit) {
+        val uid = auth.currentUser?.uid
+
+        db.collection("usuarios")
+            .document(uid.toString()).get()
+            .addOnSuccessListener { document ->
+                val nome = document.getString("nome")
+                callback(nome.toString())
+            }
+            .addOnFailureListener {
+                callback("Erro ao pegar nome de usuario")
             }
     }
 
 
+        fun cadastrarUsuario(
+            nome: String,
+            email: String,
+            senha: String,
+            tipo: String,
+            callback: (Boolean, String?) -> Unit
+        ) {
+            auth.createUserWithEmailAndPassword(email, senha)
+                .addOnSuccessListener { result ->
 
-}
+                    val uid = result.user?.uid ?: return@addOnSuccessListener
+
+                    val usuario = Usuario(
+                        uid = uid,
+                        nome = nome,
+                        email = email,
+                        tipo = tipo
+                    )
+
+                    db.collection("usuarios")
+                        .document(uid)
+                        .set(usuario)
+                        .addOnSuccessListener {
+                            callback(true, null)
+                        }
+                        .addOnFailureListener { e ->
+                            callback(false, e.localizedMessage)
+                        }
+                }
+                .addOnFailureListener { e ->
+                    callback(false, e.localizedMessage)
+                }
+        }
+
+
+    }

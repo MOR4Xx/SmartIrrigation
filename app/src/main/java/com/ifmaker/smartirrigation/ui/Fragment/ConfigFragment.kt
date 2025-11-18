@@ -1,6 +1,5 @@
 package com.ifmaker.smartirrigation.ui.Fragment
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,17 +10,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.compose.material3.AlertDialog
-import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.ifmaker.smartirrigation.data.Model.OptionMenuAdm
+import com.ifmaker.smartirrigation.data.Model.OptionMenuGet
 import com.ifmaker.smartirrigation.ui.Adapter.ConfigAdapter
 import com.ifmaker.smartirrigation.ui.Adapter.OptionViewHolder
 import com.ifmaker.smartirrigation.R
+import com.ifmaker.smartirrigation.data.Model.OptionMenu
 import com.ifmaker.smartirrigation.databinding.FragmentConfigBinding
 import com.ifmaker.smartirrigation.ui.Activity.CadastroUserActivity
 import com.ifmaker.smartirrigation.ui.Activity.LoginActivity
@@ -49,6 +47,9 @@ class ConfigFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(ConfigViewModel::class.java)
 
+        val nomeUsr = view.findViewById<TextView>(R.id.infoNome)
+        val infoTextView = view.findViewById<TextView>(R.id.infoUser)
+
         val recyclerView: RecyclerView = view.findViewById(R.id.recicleOption)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -57,9 +58,36 @@ class ConfigFragment : Fragment() {
         recyclerView.addItemDecoration(dividerItemDecoration)
         recyclerView.setHasFixedSize(true)
 
-        val listOption = OptionMenuAdm.getMenuList()
+        viewModel.getPermissao()
+        viewModel.getNome()
 
-        recyclerView.adapter = ConfigAdapter(requireContext(), listOption, onClickOption())
+        viewModel.nome.observe(viewLifecycleOwner) { nome ->
+            val nome = viewModel.nome.value
+            nomeUsr.text = "${nome}"
+        }
+
+        viewModel.permissao.observe(viewLifecycleOwner) { permissao ->
+            val permissao = viewModel.permissao.value
+            infoTextView.text = "${permissao}"
+
+            val allOptions = OptionMenuGet.getMenuList()
+            val filteredOptions: List<OptionMenu>
+
+            if (permissao == "Administrador") {
+                filteredOptions = allOptions
+            } else {
+                filteredOptions = allOptions.filter { option ->
+                    option.title != "Latitude do Sistema" &&
+                            option.title != "Adicionar Novo Usuario"
+                }
+            }
+
+            recyclerView.adapter = ConfigAdapter(
+                requireContext(),
+                filteredOptions,
+                onClickOption(filteredOptions)
+            )
+        }
 
     }
 
@@ -69,8 +97,7 @@ class ConfigFragment : Fragment() {
     }
 
 
-    fun onClickOption(): ConfigAdapter.OptionOnClickListener {
-        val listOption = OptionMenuAdm.getMenuList()
+    fun onClickOption(listOption: List<OptionMenu>): ConfigAdapter.OptionOnClickListener {
 
         return object : ConfigAdapter.OptionOnClickListener {
             override fun onClick(holder: OptionViewHolder, index: Int) {
