@@ -10,11 +10,8 @@ class HistoricoRepository() {
     val collectionPath = "historico"
 
     suspend fun getHistorico(): List<Historico> {
-        Log.d("Arrumando saporra", "entrou getHistorico")
 
         val result = db.collection(collectionPath).get().await()
-
-        Log.d("Arrumando saporra", result.documents.toString())
         // Isso converte tudo sozinho
         return result.toObjects(Historico::class.java)
     }

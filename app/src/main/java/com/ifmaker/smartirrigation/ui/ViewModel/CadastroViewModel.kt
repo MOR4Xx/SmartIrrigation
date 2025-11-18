@@ -7,7 +7,6 @@ import com.ifmaker.smartirrigation.data.Repository.UsuarioRepository
 class CadastroViewModel : ViewModel() {
 
     private val repo = UsuarioRepository()
-    val loading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
     val success = MutableLiveData<Boolean>()
 
@@ -28,10 +27,7 @@ class CadastroViewModel : ViewModel() {
             return
         }
 
-        loading.value = true
-
         repo.cadastrarUsuario(nome, email, senha, permissao) { ok, erro ->
-            loading.value = false
             if (ok) {
                 success.value = true
             } else {

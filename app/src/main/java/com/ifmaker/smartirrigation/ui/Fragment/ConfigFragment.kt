@@ -1,5 +1,6 @@
 package com.ifmaker.smartirrigation.ui.Fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,8 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.compose.material3.AlertDialog
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,19 +22,32 @@ import com.ifmaker.smartirrigation.data.Model.OptionMenuAdm
 import com.ifmaker.smartirrigation.ui.Adapter.ConfigAdapter
 import com.ifmaker.smartirrigation.ui.Adapter.OptionViewHolder
 import com.ifmaker.smartirrigation.R
+import com.ifmaker.smartirrigation.databinding.FragmentConfigBinding
 import com.ifmaker.smartirrigation.ui.Activity.CadastroUserActivity
 import com.ifmaker.smartirrigation.ui.Activity.LoginActivity
+import com.ifmaker.smartirrigation.ui.ViewModel.ConfigViewModel
 
 class ConfigFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
+    private var _binding: FragmentConfigBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var viewModel: ConfigViewModel
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentConfigBinding.inflate(inflater, container, false)
+        return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(this).get(ConfigViewModel::class.java)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recicleOption)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -51,14 +68,6 @@ class ConfigFragment : Fragment() {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_config, container, false)
-
-    }
 
     fun onClickOption(): ConfigAdapter.OptionOnClickListener {
         val listOption = OptionMenuAdm.getMenuList()
@@ -68,7 +77,7 @@ class ConfigFragment : Fragment() {
                 val selected = listOption[index].title
 
                 when (selected) {
-//                    "Latitude do Sistema" -> alterarLatitude()
+                    "Latitude do Sistema" -> alterarLatitude()
 //                    "Tipo de Plantio" -> alterarTipoPlantio()
                     "Adicionar Novo Usuario" -> abrirCadastroUsuario()
                     "Logout" -> showLogoutDialog()
@@ -76,6 +85,41 @@ class ConfigFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun alterarLatitude() {
+        val view = layoutInflater.inflate(R.layout.popup_latitude, null)
+
+        viewModel.getLatitude()
+
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setView(view)
+            .setCancelable(true)
+            .create()
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val textView = view.findViewById<TextView>(R.id.txtLatitudeAtual)
+        val btnCancel = view.findViewById<Button>(R.id.btnCancelLatitude)
+        val btnAlterar = view.findViewById<Button>(R.id.btnConfirmarLatitude)
+        val edtLatitude = view.findViewById<EditText>(R.id.inputLatitude)
+
+        viewModel.latitude.observe(viewLifecycleOwner) { latitude ->
+            val latitude = viewModel.latitude.value
+            textView.text = "Latitude Atual: ${latitude}"
+        }
+
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnAlterar.setOnClickListener {
+            val latitude = edtLatitude.text.toString().toDouble()
+            viewModel.alterarLatitude(latitude)
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     private fun abrirCadastroUsuario() {

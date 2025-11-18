@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.ifmaker.smartirrigation.R
@@ -25,6 +26,8 @@ class CadastroUserActivity : AppCompatActivity() {
     private lateinit var btnCadastrar: Button
     private lateinit var btnMostrarSenha: ImageView
     private lateinit var btnMostrarConfirmar: ImageView
+    private lateinit var btnCancel: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +49,13 @@ class CadastroUserActivity : AppCompatActivity() {
         }
 
         btnMostrarSenha.setOnClickListener { togglePassword(inputSenha, btnMostrarSenha) }
-        btnMostrarConfirmar.setOnClickListener { togglePassword(inputConfirmar, btnMostrarConfirmar) }
+        btnMostrarConfirmar.setOnClickListener {
+            togglePassword(
+                inputConfirmar,
+                btnMostrarConfirmar
+            )
+        }
+        btnCancel.setOnClickListener {finish()}
 
     }
 
@@ -59,6 +68,7 @@ class CadastroUserActivity : AppCompatActivity() {
         btnMostrarSenha = findViewById(R.id.btnMostrarSenha)
         btnMostrarConfirmar = findViewById(R.id.btnMostrarConfirmar)
         btnCadastrar = findViewById(R.id.btnConfirmar)
+        btnCancel = findViewById(R.id.btnCancel)
 
         val niveis = listOf("Administrador", "Visualizador")
         inputPermissao.adapter = ArrayAdapter(
@@ -69,14 +79,16 @@ class CadastroUserActivity : AppCompatActivity() {
     }
 
     private fun togglePassword(edit: EditText, icon: ImageView) {
-        val isVisible = edit.inputType == (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
+        val isVisible =
+            edit.inputType == (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
 
         if (isVisible) {
             edit.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            icon.setImageResource(R.drawable.eyees_off)
-        } else {
-            edit.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
             icon.setImageResource(R.drawable.eyees_on)
+        } else {
+            edit.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            icon.setImageResource(R.drawable.eyees_off)
         }
 
         edit.setSelection(edit.text.length)

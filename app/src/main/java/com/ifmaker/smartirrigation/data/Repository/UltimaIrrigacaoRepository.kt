@@ -9,6 +9,7 @@ class UltimaIrrigacaoRepository {
     val db = FirebaseFirestore.getInstance()
     val collectionPath = "configuracao"
 
+
     suspend fun getUltimaIrrigacao(): UltimaIrrigacao? {
         return try {
             val snapshot = db.collection(collectionPath)

@@ -16,7 +16,6 @@ class HistoricoFragment : Fragment() {
     private var _binding: FragmentHistoricoBinding? = null
     private val binding get() = _binding!!
 
-    // Apenas declare a variavel. Não inicialize manualmente depois.
     private val viewModel: HistoricoViewModel by viewModels()
 
     private lateinit var adapter: HistoricoAdapter
@@ -33,7 +32,6 @@ class HistoricoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Configuração do Adapter
         adapter = HistoricoAdapter(emptyList(), requireContext())
 
         binding.listaHistorico.apply {
@@ -41,10 +39,6 @@ class HistoricoFragment : Fragment() {
             adapter = this@HistoricoFragment.adapter
         }
 
-        // --- LINHA REMOVIDA AQUI (O erro estava aqui) ---
-        // viewModel = ViewModelProvider(this).get(HistoricoViewModel::class.java)
-
-        // Observando os dados
         viewModel.listHistorico.observe(viewLifecycleOwner) { lista ->
             adapter.updateList(lista)
         }
