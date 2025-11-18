@@ -9,7 +9,7 @@ xmlns:aapt="http://schemas.android.com/aapt">
         />
 
     <solid
-        android:color="@color/ligthtest"
+        android:color="@color/white"
         />
 
 </shape>

@@ -24,36 +24,37 @@ class UsuarioRepository () {
         nome: String,
         email: String,
         senha: String,
-        permissao: String,
+        tipo: String,
         callback: (Boolean, String?) -> Unit
     ) {
         Log.d("teste","usuario cadastrado")
-//        auth.createUserWithEmailAndPassword(email, senha)
-//            .addOnSuccessListener { result ->
-//
-//                val uid = result.user?.uid ?: return@addOnSuccessListener
-//
-//                val usuario = Usuario(
-//                    uid = uid,
-//                    nome = nome,
-//                    email = email,
-//                    tipo = permissao
-//                )
-//
-//                db.collection("usuarios")
-//                    .document(uid)
-//                    .set(usuario)
-//                    .addOnSuccessListener {
-//                        callback(true, null)
-//                    }
-//                    .addOnFailureListener { e ->
-//                        callback(false, e.localizedMessage)
-//                    }
-//            }
-//            .addOnFailureListener { e ->
-//                callback(false, e.localizedMessage)
-//            }
+        auth.createUserWithEmailAndPassword(email, senha)
+            .addOnSuccessListener { result ->
+
+                val uid = result.user?.uid ?: return@addOnSuccessListener
+
+                val usuario = Usuario(
+                    uid = uid,
+                    nome = nome,
+                    email = email,
+                    tipo = tipo
+                )
+
+                db.collection("usuarios")
+                    .document(uid)
+                    .set(usuario)
+                    .addOnSuccessListener {
+                        callback(true, null)
+                    }
+                    .addOnFailureListener { e ->
+                        callback(false, e.localizedMessage)
+                    }
+            }
+            .addOnFailureListener { e ->
+                callback(false, e.localizedMessage)
+            }
     }
+
 
 
 }

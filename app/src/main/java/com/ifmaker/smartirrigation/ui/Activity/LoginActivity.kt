@@ -7,10 +7,11 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat // Importante para pegar cores corretamente
+import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.ifmaker.smartirrigation.R
 import com.ifmaker.smartirrigation.ui.ViewModel.LoginViewModel
+import android.view.inputmethod.InputMethodManager
 
 class LoginActivity : AppCompatActivity() {
 
@@ -28,6 +29,8 @@ class LoginActivity : AppCompatActivity() {
         initComponents()
 
         btnLogin.setOnClickListener {
+            hideKeyboard()
+
             val loginText = login.text.toString()
             val passwordText = password.text.toString()
 
@@ -40,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.loginResult.observe(this) { success ->
             if (success) {
+                mostrarSnackbar(btnLogin, "Login realizado com sucesso!")
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -64,4 +68,12 @@ class LoginActivity : AppCompatActivity() {
 
         snackbar.show()
     }
+
+    private fun hideKeyboard() {
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = currentFocus ?: View(this)
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+
 }
