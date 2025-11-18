@@ -19,17 +19,24 @@ class ConfigRepository {
             Log.d("Latitude: ","Latitude: ${result.getDouble("latitude")}")
             return result.getDouble("latitude")
         } catch (e: Exception) {
-            null
+            Log.e("Firestore", "Erro ao obter latitude", e)
         }
         return 0.0
     }
 
-    suspend fun  setLatitude(latitude: Double) {
+    suspend fun  setLatitude(latitude: Double, callback: (Double) -> Unit){
         Log.d("Latitude: ","Latitude: $latitude")
 
+        val docRef = db.collection(collectionPath).document(documentId)
 
-
-
+        docRef.update("latitude", latitude)
+            .addOnSuccessListener {
+                Log.d("Firestore", "Latitude alterada com sucesso")
+                callback(latitude)
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Erro ao atualizar", e)
+            }
     }
 
 }

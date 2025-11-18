@@ -21,7 +21,9 @@ class ConfigViewModel: ViewModel() {
 
     fun alterarLatitude(latitude: Double){
         viewModelScope.launch {
-            repository.setLatitude(latitude)
+            repository.setLatitude(latitude, callback = {ok ->
+                _latitude.value = latitude
+            })
         }
     }
 
