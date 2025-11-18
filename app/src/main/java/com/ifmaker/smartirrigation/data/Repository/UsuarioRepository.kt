@@ -10,8 +10,14 @@ class UsuarioRepository () {
     val auth = FirebaseAuth.getInstance()
     val collectionPath = "usuarios"
 
-    fun cadastrarUsuario() {
-
+    fun login(username: String, password: String, callback: (Boolean, String?) -> Unit) {
+        auth.signInWithEmailAndPassword(username, password)
+            .addOnSuccessListener {
+                callback(true, null)
+            }
+            .addOnFailureListener { e ->
+                callback(false, e.localizedMessage)
+            }
     }
 
     fun cadastrarUsuario(

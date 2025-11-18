@@ -1,86 +1,42 @@
-package com.ifmaker.smartirrigation.ui.Activity
+package com.ifmaker.smartirrigation.ui.ViewModel
 
-import android.os.Bundle
-import android.text.InputType
-import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.ifmaker.smartirrigation.R
-import com.ifmaker.smartirrigation.databinding.ActivityCadastroUserBinding
-import com.ifmaker.smartirrigation.ui.ViewModel.CadastroViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.ifmaker.smartirrigation.data.Repository.UsuarioRepository
 
-class CadastroUserActivity : AppCompatActivity() {
+class CadastroViewModel : ViewModel() {
 
-    private lateinit var binding: ActivityCadastroUserBinding
-    private lateinit var viewModel: CadastroViewModel
+    private val repo = UsuarioRepository()
+    val loading = MutableLiveData<Boolean>()
+    val errorMessage = MutableLiveData<String>()
+    val success = MutableLiveData<Boolean>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityCadastroUserBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        viewModel = ViewModelProvider(this).get(CadastroViewModel::class.java)
-
-        initViews()
-        observerUi()
-
-        binding.btnConfirmar.setOnClickListener {
-            val nome = binding.inputNome.text.toString()
-            val email = binding.inputEmail.text.toString()
-            val senha = binding.inputSenha.text.toString()
-            val confirmar = binding.inputConfirmar.text.toString()
-            val permissao = binding.spinnerPermissao.selectedItem.toString()
-
-            viewModel.cadastrarUsuario(nome, email, senha, confirmar, permissao)
+    fun cadastrarUsuario(
+        nome: String,
+        email: String,
+        senha: String,
+        confirmar: String,
+        permissao: String
+    ) {
+        if (nome.isBlank() || email.isBlank() || senha.isBlank()) {
+            errorMessage.value = "Preencha todos os campos"
+            return
         }
 
-        binding.btnMostrarSenha.setOnClickListener {
-            togglePassword(binding.inputSenha, binding.btnMostrarSenha)
+        if (senha != confirmar) {
+            errorMessage.value = "As senhas não coincidem"
+            return
         }
 
-        binding.btnMostrarConfirmar.setOnClickListener {
-            togglePassword(binding.inputConfirmar, binding.btnMostrarConfirmar)
+        loading.value = true
+
+        repo.cadastrarUsuario(nome, email, senha, permissao) { ok, erro ->
+            loading.value = false
+            if (ok) {
+                success.value = true
+            } else {
+                errorMessage.value = erro ?: "Erro desconhecido"
+            }
         }
-    }
-
-    private fun observerUi() {
-//        viewModel.loading.observe(this) { loading ->
-//            binding.progressBar.visibility = if (loading) View.VISIBLE else View.GONE
-//        }
-//
-//        viewModel.errorMessage.observe(this) { msg ->
-//            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-//        }
-//
-//        viewModel.success.observe(this) { ok ->
-//            if (ok) {
-//                Toast.makeText(this, "Usuário cadastrado!", Toast.LENGTH_SHORT).show()
-//                finish()
-//            }
-//        }
-    }
-
-    private fun initViews() {
-        val niveis = listOf("Administrador", "Visualizador")
-        binding.spinnerPermissao.adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_dropdown_item,
-            niveis
-        )
-    }
-
-    private fun togglePassword(edit: EditText, icon: ImageView) {
-        val visible = edit.inputType ==
-                (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
-
-        if (visible) {
-            edit.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            icon.setImageResource(R.drawable.eyees_off)
-        } else {
-            edit.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            icon.setImageResource(R.drawable.eyees_on)
-        }
-
-        edit.setSelection(edit.text.length)
     }
 }

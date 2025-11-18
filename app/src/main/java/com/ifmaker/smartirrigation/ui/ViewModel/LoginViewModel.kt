@@ -1,43 +1,28 @@
 package com.ifmaker.smartirrigation.ui.ViewModel
 
+
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ifmaker.smartirrigation.data.Repository.UsuarioRepository
 
-class CadastroViewModel : ViewModel() {
+class LoginViewModel : ViewModel() {
+    val repo: UsuarioRepository = UsuarioRepository()
 
-    private val repo = UsuarioRepository()
+    private val _loginResult = MutableLiveData<Boolean>()
+    val loginResult: LiveData<Boolean> = _loginResult
 
-    val loading = MutableLiveData<Boolean>()
-    val errorMessage = MutableLiveData<String>()
-    val success = MutableLiveData<Boolean>()
+    fun login(login: String, password: String) {
+        // login logic
+        val username = login
+        val password = password
 
-    fun cadastrarUsuario(
-        nome: String,
-        email: String,
-        senha: String,
-        confirmar: String,
-        permissao: String
-    ) {
-        if (nome.isBlank() || email.isBlank() || senha.isBlank()) {
-            errorMessage.value = "Preencha todos os campos"
-            return
-        }
-
-        if (senha != confirmar) {
-            errorMessage.value = "As senhas não coincidem"
-            return
-        }
-
-        loading.value = true
-
-        repo.cadastrarUsuario(nome, email, senha, permissao) { ok, erro ->
-            loading.value = false
+        repo.login(username, password, { ok, erro ->
             if (ok) {
-                success.value = true
+                _loginResult.value = true
             } else {
-                errorMessage.value = erro ?: "Erro desconhecido"
+                _loginResult.value = false
             }
-        }
+        })
     }
 }

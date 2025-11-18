@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.ifmaker.smartirrigation.R
@@ -35,7 +34,6 @@ class CadastroUserActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(CadastroViewModel::class.java)
 
         initViews()
-        observerUi()
 
         binding.btnConfirmar.setOnClickListener {
             val nome = binding.inputNome.text.toString()
@@ -50,22 +48,6 @@ class CadastroUserActivity : AppCompatActivity() {
         btnMostrarSenha.setOnClickListener { togglePassword(inputSenha, btnMostrarSenha) }
         btnMostrarConfirmar.setOnClickListener { togglePassword(inputConfirmar, btnMostrarConfirmar) }
 
-    }
-
-    private fun observerUi() {
-//        viewModel.uiState.observe(this) { state ->
-//            binding.progressBar.visibility =
-//                if (state.isLoading) View.VISIBLE else View.GONE
-//
-//            state.error?.let { message ->
-//                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-//            }
-//
-//            if (state.isSuccess) {
-//                Toast.makeText(this, "Usuário cadastrado!", Toast.LENGTH_SHORT).show()
-//                finish()
-//            }
-//        }
     }
 
     private fun initViews() {
