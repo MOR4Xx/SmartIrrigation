@@ -1,5 +1,6 @@
 package com.ifmaker.smartirrigation.ui.Fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,8 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -78,7 +81,8 @@ class ConfigFragment : Fragment() {
             } else {
                 filteredOptions = allOptions.filter { option ->
                     option.title != "Latitude do Sistema" &&
-                            option.title != "Adicionar Novo Usuario"
+                            option.title != "Adicionar Novo Usuario" &&
+                            option.title != "Tipo de Plantio"
                 }
             }
 
@@ -104,10 +108,11 @@ class ConfigFragment : Fragment() {
                 val selected = listOption[index].title
 
                 when (selected) {
+                    "Aparencia" -> Log.d("CLICK_TEST", "Nenhuma ação associada")
                     "Latitude do Sistema" -> alterarLatitude()
-//                    "Tipo de Plantio" -> alterarTipoPlantio()
+                    "Tipo de Plantio" -> alterarTipoPlantio()
                     "Adicionar Novo Usuario" -> abrirCadastroUsuario()
-                    "Logout" -> showLogoutDialog()
+                    "Logout" -> logout()
                     else -> Log.d("CLICK_TEST", "Nenhuma ação associada")
                 }
             }
@@ -155,7 +160,74 @@ class ConfigFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun showLogoutDialog() {
+    @SuppressLint("MissingInflatedId")
+    fun alterarTipoPlantio() {
+        val view = layoutInflater.inflate(R.layout.popup_tipo_plantio, null)
+
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setView(view)
+            .setCancelable(true)
+            .create()
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val txtCultura = view.findViewById<TextView>(R.id.txtCulturaAtual)
+        val txtKc = view.findViewById<TextView>(R.id.txtKcAtual)
+
+        viewModel.getDados()
+
+        viewModel.cultura.observe(viewLifecycleOwner) { cultura ->
+            val cultura = viewModel.cultura.value
+            txtCultura.text = "Cultura Atual: ${cultura}"
+        }
+
+        viewModel.fase.observe(viewLifecycleOwner) { fase ->
+            val fase = viewModel.fase.value
+            txtKc.text = "Kc Atual: ${fase}"
+        }
+
+        val btnCancel = view.findViewById<Button>(R.id.btnCancelPlantio)
+        val btnAlterar = view.findViewById<Button>(R.id.btnConfirmarPlantio)
+
+        val spinnerTipoCultura = view.findViewById<Spinner>(R.id.inputCultura)
+        viewModel.getCultura()
+
+        viewModel.listCultura.observe(viewLifecycleOwner) { plantio ->
+            spinnerTipoCultura.adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                plantio
+            )
+        }
+
+        val spinnerKc = view.findViewById<Spinner>(R.id.inputKc)
+
+        val fases = listOf("Fase 1", "Fase 2", "Fase 3", "Fase 4")
+        spinnerKc.adapter =
+            ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                fases
+            )
+
+
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnAlterar.setOnClickListener {
+            val selectedTipoCultura = spinnerTipoCultura.selectedItem.toString()
+            val selectedKc = spinnerKc.selectedItem.toString()
+            viewModel.alterarTipoCultura(selectedTipoCultura, selectedKc)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+
+    }
+
+
+    private fun logout() {
         val view = layoutInflater.inflate(R.layout.notificacao_logout, null)
 
         val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())

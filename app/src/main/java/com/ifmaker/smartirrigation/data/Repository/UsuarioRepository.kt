@@ -23,7 +23,7 @@ class UsuarioRepository() {
     fun getPermissao(callback: (String?) -> Unit) {
         val uid = auth.currentUser?.uid
 
-        db.collection("usuarios")
+        db.collection(collectionPath)
             .document(uid.toString())
             .get()
             .addOnSuccessListener { document ->
@@ -38,7 +38,7 @@ class UsuarioRepository() {
     fun getNomeUsuario(callback: (String?) -> Unit) {
         val uid = auth.currentUser?.uid
 
-        db.collection("usuarios")
+        db.collection(collectionPath)
             .document(uid.toString()).get()
             .addOnSuccessListener { document ->
                 val nome = document.getString("nome")
@@ -49,40 +49,39 @@ class UsuarioRepository() {
             }
     }
 
+    fun cadastrarUsuario(
+        nome: String,
+        email: String,
+        senha: String,
+        tipo: String,
+        callback: (Boolean, String?) -> Unit
+    ) {
+        auth.createUserWithEmailAndPassword(email, senha)
+            .addOnSuccessListener { result ->
 
-        fun cadastrarUsuario(
-            nome: String,
-            email: String,
-            senha: String,
-            tipo: String,
-            callback: (Boolean, String?) -> Unit
-        ) {
-            auth.createUserWithEmailAndPassword(email, senha)
-                .addOnSuccessListener { result ->
+                val uid = result.user?.uid ?: return@addOnSuccessListener
 
-                    val uid = result.user?.uid ?: return@addOnSuccessListener
+                val usuario = Usuario(
+                    uid = uid,
+                    nome = nome,
+                    email = email,
+                    tipo = tipo
+                )
 
-                    val usuario = Usuario(
-                        uid = uid,
-                        nome = nome,
-                        email = email,
-                        tipo = tipo
-                    )
-
-                    db.collection("usuarios")
-                        .document(uid)
-                        .set(usuario)
-                        .addOnSuccessListener {
-                            callback(true, null)
-                        }
-                        .addOnFailureListener { e ->
-                            callback(false, e.localizedMessage)
-                        }
-                }
-                .addOnFailureListener { e ->
-                    callback(false, e.localizedMessage)
-                }
-        }
-
-
+                db.collection("usuarios")
+                    .document(uid)
+                    .set(usuario)
+                    .addOnSuccessListener {
+                        callback(true, null)
+                    }
+                    .addOnFailureListener { e ->
+                        callback(false, e.localizedMessage)
+                    }
+            }
+            .addOnFailureListener { e ->
+                callback(false, e.localizedMessage)
+            }
     }
+
+
+}

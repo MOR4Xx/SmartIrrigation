@@ -13,7 +13,6 @@ class LoginViewModel : ViewModel() {
     val loginResult: LiveData<Boolean> = _loginResult
 
     fun login(login: String, password: String) {
-        // login logic
         val username = login
         val password = password
 

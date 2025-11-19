@@ -3,14 +3,22 @@
     <style name="Base.Theme.IrrigacaoInteligente" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/blue</item>
-        <item name="colorOnPrimary">@color/blue</item>
-        <item name="colorSecondary">@color/grey</item>
-        <item name="colorOnSecondary">@color/grey</item>
-        <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/black</item>
-
 
     </style>
 
     <style name="Theme.IrrigacaoInteligente" parent="Base.Theme.IrrigacaoInteligente" />
+
+    <style name="InputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/blue</item>
+
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxStrokeWidthFocused">3dp</item>
+
+        <item name="boxCornerRadiusTopStart">16dp</item>
+        <item name="boxCornerRadiusTopEnd">16dp</item>
+        <item name="boxCornerRadiusBottomStart">16dp</item>
+        <item name="boxCornerRadiusBottomEnd">16dp</item>
+
+        <item name="hintTextColor">@color/blue</item>
+    </style>
 </resources>

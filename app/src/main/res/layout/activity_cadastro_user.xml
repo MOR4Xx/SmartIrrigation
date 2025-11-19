@@ -56,39 +56,39 @@
 
 
         <!-- Nome -->
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/InputStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nome"
-            android:textStyle="bold"/>
+            android:hint="Nome">
 
-        <EditText
-            android:id="@+id/inputNome"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edit_text"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
-            android:hint="Digite o nome"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Email"
-            android:textStyle="bold"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputNome"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Email -->
-        <EditText
-            android:id="@+id/inputEmail"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/InputStyle"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edit_text"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:layout_marginTop="6dp"
-            android:hint="Digite o email"/>
+            android:layout_height="wrap_content"
+            android:hint="Email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputEmail"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <!-- Senha -->
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:text="Senha"
             android:textStyle="bold"
-            android:layout_marginTop="14dp"/>
+            android:layout_marginTop="10dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

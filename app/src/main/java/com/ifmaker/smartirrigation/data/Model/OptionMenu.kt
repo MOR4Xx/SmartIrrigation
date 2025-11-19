@@ -8,7 +8,7 @@ object OptionMenuGet {
     fun getMenuList(): List<OptionMenu> {
         return listOf(
             OptionMenu("Latitude do Sistema"),
-            OptionMenu("Tipo de Platio"),
+            OptionMenu("Tipo de Plantio"),
             OptionMenu("Adicionar Novo Usuario"),
             OptionMenu("Aparencia"),
             OptionMenu("Logout")
