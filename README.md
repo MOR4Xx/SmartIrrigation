@@ -7,6 +7,10 @@ Esse projeto é uma continuação/melhoria, desenvolvido no Instituto Federal Go
 
 O projeto se propõe a controlar um sistema de irrigação de forma inteligente via aplicativo móvel Android, usando sensores, atuadores e comunicação adequada.
 
+## 📱 Prototipo de Telas
+
+- Figma: https://www.figma.com/design/PQEyH4fkirPud8TQblT5lt/Irriga%C3%A7%C3%A3o-Mobile?node-id=1206-3820&t=2hGIoqrcCnqLekZr-1
+
 ## 🚀 Funcionalidades
 
 - Interface Android para controle ou visualização de sistema de irrigação.  
