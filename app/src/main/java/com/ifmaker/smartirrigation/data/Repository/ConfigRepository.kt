@@ -2,6 +2,7 @@ package com.ifmaker.smartirrigation.data.Repository
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.ifmaker.smartirrigation.data.Model.ParametrosIrrigacao
 import kotlinx.coroutines.tasks.await
 
 
@@ -16,7 +17,7 @@ class ConfigRepository {
                 .document(documentId)
                 .get()
                 .await()
-            Log.d("Latitude: ","Latitude: ${result.getDouble("latitude")}")
+            Log.d("Latitude: ", "Latitude: ${result.getDouble("latitude")}")
             return result.getDouble("latitude")
         } catch (e: Exception) {
             Log.e("Firestore", "Erro ao obter latitude", e)
@@ -24,8 +25,8 @@ class ConfigRepository {
         return 0.0
     }
 
-    suspend fun  setLatitude(latitude: Double, callback: (Double) -> Unit){
-        Log.d("Latitude: ","Latitude: $latitude")
+    fun setLatitude(latitude: Double, callback: (Double) -> Unit) {
+        Log.d("Latitude: ", "Latitude: $latitude")
 
         val docRef = db.collection(collectionPath).document(documentId)
 
@@ -39,7 +40,7 @@ class ConfigRepository {
             }
     }
 
-    fun getCultura(callback: (List<String>) -> Unit){
+    fun getCultura(callback: (List<String>) -> Unit) {
         val plantioList = mutableListOf<String>()
 
         db.collection("coeficientes").get()
@@ -62,7 +63,7 @@ class ConfigRepository {
             }
     }
 
-    fun setPlantio(cultura: String,fase:String){
+    fun setPlantio(cultura: String, fase: String) {
         val plantio = hashMapOf(
             "cultura" to cultura,
             "fase" to fase
@@ -77,7 +78,7 @@ class ConfigRepository {
             }
     }
 
-    fun getDadosCultura(callback: (String, String) -> Unit){
+    fun getDadosCultura(callback: (String, String) -> Unit) {
         db.collection(collectionPath).document("config_kc").get()
             .addOnSuccessListener { document ->
                 val cultura = document.getString("cultura")
@@ -96,4 +97,56 @@ class ConfigRepository {
 
     }
 
+    fun getParametros(callback: (ParametrosIrrigacao) -> Unit) {
+        db.collection(collectionPath).document("config_Irrigacao").get()
+            .addOnSuccessListener { document ->
+                document.toObject(ParametrosIrrigacao::class.java)?.let {
+                    callback(it)
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Erro ao obter parametros", e)
+            }
+    }
+
+    fun setParametros(parametrosIrrigacao: ParametrosIrrigacao) {
+        db.collection(collectionPath).document("config_Irrigacao")
+            .set(parametrosIrrigacao)
+            .addOnSuccessListener {
+                Log.d("Firestore", "Parâmetros de Irrigação atualizados com sucesso")
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Erro ao atualizar parâmetros de Irrigação", e)
+            }
+    }
+
+    fun setModoIrrigacao(modo: String) {
+        val docRef = db.collection(collectionPath).document(documentId)
+        docRef.update("modo", modo)
+            .addOnSuccessListener {
+                Log.d("Firestore", "Modo de Irrigação alterado com sucesso")
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Erro ao atualizar modo de Irrigação", e)
+            }
+    }
+
+    fun setAutorizacaoIrrigacaoAutomatica(autorizacao: Boolean) {
+        val docRef = db.collection(collectionPath).document(documentId)
+        docRef.update("autorizacao", autorizacao)
+            .addOnSuccessListener {
+                Log.d("Firestore", "Permissão alterada com sucesso")
+            }
+    }
+
+    fun setQuantidadeAguaManual(quantidade: Int) {
+        val docRef = db.collection(collectionPath).document(documentId)
+        docRef.update("quantidade_agua", quantidade)
+            .addOnSuccessListener {
+                Log.d("Firestore", "Quantidade alterada com sucesso")
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Erro ao atualizar quantidade", e)
+            }
+    }
 }
