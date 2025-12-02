@@ -82,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Umidade antes da Irrigação: 30%"
+                    android:text="@{string/umid_ultima_irri}"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -90,7 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Tempo: 00:00:00"
+                    android:text="@{string/tempo_ultima_irri}"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -98,7 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Volume de água p/ Planta: 00,0L"
+                    android:text="@{string/vol_ultima_irri}"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -106,7 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Volume total de água: 00,0L"
+                    android:text="@{string/vol_total_ultima_irri}"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -114,7 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Data: 00/00/0000"
+                    android:text="@{string/data_ultima_irri}"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -122,7 +122,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Hora: 00:00:00"
+                    android:text="@{string/hora_ultima_irri}"
                     android:textColor="@color/black" />
             </LinearLayout>
 

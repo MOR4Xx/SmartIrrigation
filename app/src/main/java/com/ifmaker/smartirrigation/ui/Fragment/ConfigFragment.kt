@@ -100,7 +100,6 @@ class ConfigFragment : Fragment() {
 
     }
 
-
     fun onClickOption(listOption: List<OptionMenu>): ConfigAdapter.OptionOnClickListener {
 
         return object : ConfigAdapter.OptionOnClickListener {
@@ -108,10 +107,9 @@ class ConfigFragment : Fragment() {
                 val selected = listOption[index].title
 
                 when (selected) {
-                    "Aparencia" -> Log.d("CLICK_TEST", "Nenhuma ação associada")
                     "Latitude do Sistema" -> alterarLatitude()
                     "Tipo de Plantio" -> alterarTipoPlantio()
-                    "Adicionar Novo Usuario" -> abrirCadastroUsuario()
+                    "Adicionar Novo Usuario" -> adicionarNovoUsuario()
                     "Logout" -> logout()
                     else -> Log.d("CLICK_TEST", "Nenhuma ação associada")
                 }
@@ -152,12 +150,6 @@ class ConfigFragment : Fragment() {
         }
 
         dialog.show()
-    }
-
-    private fun abrirCadastroUsuario() {
-        Log.d("teste", "entrou no metodo de chamar view")
-        val intent = Intent(requireContext(), CadastroUserActivity::class.java)
-        startActivity(intent)
     }
 
     @SuppressLint("MissingInflatedId")
@@ -226,6 +218,11 @@ class ConfigFragment : Fragment() {
 
     }
 
+    private fun adicionarNovoUsuario() {
+        Log.d("teste", "entrou no metodo de chamar view")
+        val intent = Intent(requireContext(), CadastroUserActivity::class.java)
+        startActivity(intent)
+    }
 
     private fun logout() {
         val view = layoutInflater.inflate(R.layout.notificacao_logout, null)

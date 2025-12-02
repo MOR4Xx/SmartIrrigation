@@ -10,7 +10,6 @@ object OptionMenuGet {
             OptionMenu("Latitude do Sistema"),
             OptionMenu("Tipo de Plantio"),
             OptionMenu("Adicionar Novo Usuario"),
-            OptionMenu("Aparencia"),
             OptionMenu("Logout")
         )
     }
