@@ -2,6 +2,7 @@ package com.ifmaker.smartirrigation.data.Repository
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.ifmaker.smartirrigation.data.Model.CoeficienteCultura
 import com.ifmaker.smartirrigation.data.Model.ParametrosIrrigacao
 import kotlinx.coroutines.tasks.await
 
@@ -149,4 +150,28 @@ class ConfigRepository {
                 Log.e("Firestore", "Erro ao atualizar quantidade", e)
             }
     }
+
+    fun getKc(cultura: String, callback: (CoeficienteCultura?) -> Unit) {
+        db.collection("coeficientes").document(cultura).get()
+            .addOnSuccessListener { document ->
+                val dados = document.toObject(CoeficienteCultura::class.java)
+                callback(dados)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("Firestore", "Erro ao obter dados do documento", exception)
+            }
+    }
+
+    fun setKc(novoKc: String){
+        val docref = db.collection(collectionPath).document("config_Irrigacao")
+
+        docref.update("kc", novoKc).addOnSuccessListener {
+                Log.d("Firebase", "KC atualizado com sucesso para: $novoKc")
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firebase", "Erro ao atualizar KC", e)
+            }
+    }
 }
+
+

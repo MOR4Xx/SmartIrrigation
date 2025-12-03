@@ -54,7 +54,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/ultima_irri"
+                android:id="@+id/ultima_irrigacao"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
@@ -125,7 +125,7 @@
                 android:layout_height="5dp" />
 
             <LinearLayout
-                android:id="@+id/card_parametros_irrigacao"
+                android:id="@+id/parametrosIrrigacao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -149,59 +149,52 @@
                     android:layout_height="5dp" />
 
                 <TextView
-                    android:id="@+id/kc_paran"
+                    android:id="@+id/txtKc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Coeficiente de cultura (Kc): 1,4"
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/espaco_paran"
+                    android:id="@+id/txtEspacoPlanta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Espaçamento entre Plantas: 0,3m"
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/canteiro_paran"
+                    android:id="@+id/txtEspacoLinha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Largura do canteiro: 0,3m"
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/vazao_paran"
+                    android:id="@+id/txtVazaoGotejador"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Vazão do Gotejador: 2 L/h"
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/gotejadores_paran"
+                    android:id="@+id/txtGotejadores"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Gotejadores por planta: 1"
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/qtd_plant_paran"
+                    android:id="@+id/txtQtdPlanta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Quantidade de Plantas: 30"
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/umid_min_paran"
+                    android:id="@+id/txtUmidade"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="Umidade mínima do Solo: 50%"
                     android:textColor="@color/black" />
 
                 <View
@@ -237,7 +230,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Ativar Irrigação"
+                    android:text="Permitir Irrigação"
                     android:textColor="@color/black"
                     android:textSize="15dp"
                     android:textStyle="bold" />

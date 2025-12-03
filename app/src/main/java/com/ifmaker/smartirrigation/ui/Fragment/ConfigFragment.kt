@@ -225,7 +225,7 @@ class ConfigFragment : Fragment() {
     }
 
     private fun logout() {
-        val view = layoutInflater.inflate(R.layout.notificacao_logout, null)
+        val view = layoutInflater.inflate(R.layout.popup_logout, null)
 
         val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
             .setView(view)

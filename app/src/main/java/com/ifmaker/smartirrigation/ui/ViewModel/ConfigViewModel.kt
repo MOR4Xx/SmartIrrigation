@@ -63,8 +63,22 @@ class ConfigViewModel : ViewModel() {
     }
 
     fun alterarTipoCultura(tipoCultura: String, fase: String) {
-        viewModelScope.launch {
-            repository.setPlantio(tipoCultura, fase)
+        repository.getKc(tipoCultura) { dadosKc ->
+            if (dadosKc != null) {
+                val kcSelecionado = when (fase) {
+                    "Fase 1" -> dadosKc.kc1
+                    "Fase 2" -> dadosKc.kc2
+                    "Fase 3" -> dadosKc.kc3
+                    "Fase 4" -> dadosKc.kc4
+                    else -> dadosKc.kc1
+                }
+
+                viewModelScope.launch {
+                    repository.setPlantio(tipoCultura, fase)
+                    repository.setKc(kcSelecionado)
+
+                }
+            }
         }
     }
 
