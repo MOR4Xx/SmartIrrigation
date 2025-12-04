@@ -11,6 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IrrigacaoInteligente">
+        <activity
+            android:name=".ui.Activity.EditarPerfil"
+            android:exported="false" />
         <activity android:name=".ui.Activity.CadastroUserActivity" />
         <activity
             android:name=".ui.Activity.LoginActivity"
@@ -21,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.Activity.MainActivity"></activity>
+        <activity android:name=".ui.Activity.MainActivity" />
     </application>
 
 </manifest>

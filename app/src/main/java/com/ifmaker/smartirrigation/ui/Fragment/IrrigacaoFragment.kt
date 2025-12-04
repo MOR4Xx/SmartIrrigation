@@ -50,7 +50,7 @@ class IrrigacaoFragment : Fragment() {
     private val VOLUME_MINIMO = 0
     private var isAutorizacaoAutomaticaAtiva: Boolean = false
     private var timerIrrigacao: CountDownTimer? = null
-
+    private var mode: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,19 +62,24 @@ class IrrigacaoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModel = ViewModelProvider(this).get(IrrigacaoViewModel::class.java)
-
         definirInterface(_binding!!.root)
 
         val state = requireActivity().getSharedPreferences("AppIrrigacao", Context.MODE_PRIVATE)
-        val isManualMode = state.getBoolean("MODO_MANUAL", false)
 
-        atualizarInterface(isManualMode)
-        configurarControlesManuais()
+        viewModel.getPermissao()
+        viewModel.permissao.observe(viewLifecycleOwner) {
+            desativarControles(it)
+        }
+
+        viewModel.getModoIrrigacao()
+        viewModel.modoIrrigacao.observe(viewLifecycleOwner) { modoIrrigacao ->
+            this.mode = modoIrrigacao
+            atualizarInterface(mode)
+            configurarControlesManuais()
+        }
 
         viewModel.getUltimaIrrigacao()
-
         viewModel.ultimaIrrigacao.observe(viewLifecycleOwner) { ultimaIrrigacao ->
             val ultimaIrrigacao = viewModel.ultimaIrrigacao.value
 
@@ -91,7 +96,6 @@ class IrrigacaoFragment : Fragment() {
 
             exibirParametros()
         }
-
 
         btnManual.setOnClickListener {
             salvarPreferencia(true)
@@ -129,7 +133,6 @@ class IrrigacaoFragment : Fragment() {
         btnAtivarManual.setOnClickListener {
             if (volumeAguaSelecionado <= 0) return@setOnClickListener
 
-            // Enviar quantidade para o ViewModel
             viewModel.setQuantidadeAguaManual(volumeAguaSelecionado)
             mostrarSnackbar(requireView(), "Irrigação Iniciada")
 
@@ -202,6 +205,16 @@ class IrrigacaoFragment : Fragment() {
 
     }
 
+    private fun atualizarValorAgua(valor: Int) {
+        slider.progress = valor
+        atualizarTextosAgua()
+    }
+
+    private fun atualizarTextosAgua() {
+        txtQuantidade.text = volumeAguaSelecionado.toString()
+        txtLitros.text = "${volumeAguaSelecionado}L"
+    }
+
     private fun exibirParametros() {
         viewModel.getParametrosIrrigacao()
 
@@ -219,6 +232,26 @@ class IrrigacaoFragment : Fragment() {
             .text = "Quantidade de Plantas: ${parametrosIrrigacao.numero_total_plantas}"
         binding.parametrosIrrigacao.findViewById<TextView>(R.id.txtUmidade)
             .text = "Umidade mínima do Solo: ${parametrosIrrigacao.limiar_umidade_minima}%"
+    }
+
+    private fun exibirUltimaIrrigacao(ultimaIrrigacao: UltimaIrrigacao?) {
+        val data = ultimaIrrigacao?.data ?: "--/--/--"
+        val hora = ultimaIrrigacao?.hora ?: "--:--"
+        val tempo = ultimaIrrigacao?.tempo ?: "-"
+        val volume_por_planta = ultimaIrrigacao?.volume_por_planta ?: "-"
+        val volume_total = ultimaIrrigacao?.volume_total ?: "-"
+        val umidade_atual = ultimaIrrigacao?.umidade_atual ?: "-"
+
+        binding.ultimaIrrigacao.findViewById<TextView>(R.id.data_ultima_irri).text = "Data: $data"
+        binding.ultimaIrrigacao.findViewById<TextView>(R.id.hora_ultima_irri).text = "Hora: $hora"
+        binding.ultimaIrrigacao.findViewById<TextView>(R.id.tempo_ultima_irri).text =
+            "Tempo: $tempo"
+        binding.ultimaIrrigacao.findViewById<TextView>(R.id.vol_ultima_irri).text =
+            "Volume de água p/ Planta: $volume_por_planta"
+        binding.ultimaIrrigacao.findViewById<TextView>(R.id.vol_total_ultima_irri).text =
+            "Volume total de água: $volume_total"
+        binding.ultimaIrrigacao.findViewById<TextView>(R.id.umid_ultima_irri).text =
+            "Umidade antes da Irrigação: $umidade_atual%"
     }
 
     private fun configurarControlesManuais() {
@@ -257,43 +290,24 @@ class IrrigacaoFragment : Fragment() {
         }
     }
 
-    private fun atualizarValorAgua(valor: Int) {
-        slider.progress = valor
-        atualizarTextosAgua()
-    }
-
-    private fun atualizarTextosAgua() {
-        txtQuantidade.text = volumeAguaSelecionado.toString()
-        txtLitros.text = "${volumeAguaSelecionado}L"
-    }
-
-    private fun salvarPreferencia(isManual: Boolean) {
-        val sharedPref =
-            requireActivity().getSharedPreferences("AppIrrigacao", Context.MODE_PRIVATE)
-        with(sharedPref.edit()) {
-            putBoolean("MODO_MANUAL", isManual)
-            apply()
+    private fun desativarControles(isAdm: Boolean){
+        if (!isAdm){
+            btnManual.isEnabled = false
+            btnAutomatico.isEnabled = false
+            btnAtivarManual.isEnabled = false
+            btnAlterarParametros.isEnabled = false
+            btnAutorizarIrriAutomatica.isEnabled = false
+            btnAumentar.isEnabled = false
+            btnDiminuir.isEnabled = false
+            slider.isEnabled = false
         }
     }
-
-    private fun exibirUltimaIrrigacao(ultimaIrrigacao: UltimaIrrigacao?) {
-        val data = ultimaIrrigacao?.data ?: "--/--/--"
-        val hora = ultimaIrrigacao?.hora ?: "--:--"
-        val tempo = ultimaIrrigacao?.tempo ?: "-"
-        val volume_por_planta = ultimaIrrigacao?.volume_por_planta ?: "-"
-        val volume_total = ultimaIrrigacao?.volume_total ?: "-"
-        val umidade_atual = ultimaIrrigacao?.umidade_atual ?: "-"
-
-        binding.ultimaIrrigacao.findViewById<TextView>(R.id.data_ultima_irri).text = "Data: $data"
-        binding.ultimaIrrigacao.findViewById<TextView>(R.id.hora_ultima_irri).text = "Hora: $hora"
-        binding.ultimaIrrigacao.findViewById<TextView>(R.id.tempo_ultima_irri).text =
-            "Tempo: $tempo"
-        binding.ultimaIrrigacao.findViewById<TextView>(R.id.vol_ultima_irri).text =
-            "Volume de água p/ Planta: $volume_por_planta"
-        binding.ultimaIrrigacao.findViewById<TextView>(R.id.vol_total_ultima_irri).text =
-            "Volume total de água: $volume_total"
-        binding.ultimaIrrigacao.findViewById<TextView>(R.id.umid_ultima_irri).text =
-            "Umidade antes da Irrigação: $umidade_atual%"
+    private fun salvarPreferencia(isManual: Boolean) {
+        val sharedPref = requireActivity().getSharedPreferences("AppIrrigacao", Context.MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            viewModel.setModoIrrigacao(if (isManual) "manual" else "automatico")
+            apply()
+        }
     }
 
     private fun atualizarInterface(isManual: Boolean) {
@@ -302,12 +316,7 @@ class IrrigacaoFragment : Fragment() {
         if (isManual) {
             btnAutomatico.background = ContextCompat.getDrawable(context, R.drawable.button_border)
             btnAutomatico.setTextColor(
-                ContextCompat.getColor(
-                    context,
-                    R.color.blue
-                )
-            ) // Assumi que "blue" existe no seu colors
-
+                ContextCompat.getColor(context,R.color.blue))
             btnManual.background =
                 ContextCompat.getDrawable(context, R.drawable.button) // Assumi drawable "button"
             btnManual.setTextColor(ContextCompat.getColor(context, R.color.white))

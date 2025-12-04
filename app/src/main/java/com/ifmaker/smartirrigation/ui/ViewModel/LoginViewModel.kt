@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.ifmaker.smartirrigation.data.Repository.UsuarioRepository
 
 class LoginViewModel : ViewModel() {
-    val repo: UsuarioRepository = UsuarioRepository()
+    val repository: UsuarioRepository = UsuarioRepository()
 
     private val _loginResult = MutableLiveData<Boolean>()
     val loginResult: LiveData<Boolean> = _loginResult
@@ -16,7 +16,7 @@ class LoginViewModel : ViewModel() {
         val username = login
         val password = password
 
-        repo.login(username, password, { ok, erro ->
+        repository.login(username, password, { ok, erro ->
             if (ok) {
                 _loginResult.value = true
             } else {

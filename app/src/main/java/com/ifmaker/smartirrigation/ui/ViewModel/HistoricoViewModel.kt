@@ -9,7 +9,7 @@ import com.ifmaker.smartirrigation.data.Repository.HistoricoRepository
 import kotlinx.coroutines.launch
 
 class HistoricoViewModel: ViewModel() {
-    private val repo = HistoricoRepository()
+    private val repository = HistoricoRepository()
     val listHistorico = MutableLiveData<List<Historico>>()
 
     init {
@@ -18,7 +18,7 @@ class HistoricoViewModel: ViewModel() {
     fun carregar() {
         viewModelScope.launch {
             try {
-                val historico = repo.getHistorico()
+                val historico = repository.getHistorico()
                 listHistorico.value = historico
 
             } catch (e: Exception) {

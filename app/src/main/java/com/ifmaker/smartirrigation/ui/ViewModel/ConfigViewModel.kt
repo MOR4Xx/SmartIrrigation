@@ -11,31 +11,37 @@ import kotlinx.coroutines.launch
 
 class ConfigViewModel : ViewModel() {
 
-    private val repository = ConfigRepository()
+    private val repositoryConfig = ConfigRepository()
     private val repositoryUsuario = UsuarioRepository()
+
     private val _latitude = MutableLiveData<Double>()
     val latitude: LiveData<Double> = _latitude
+
     private val _permissao = MutableLiveData<String?>()
     val permissao: LiveData<String?> = _permissao
+
     private val _nome = MutableLiveData<String?>()
     val nome: LiveData<String?> = _nome
+
     private val _listCultura = MutableLiveData<List<String?>>()
     val listCultura: LiveData<List<String?>> = _listCultura
+
     private val _cultura = MutableLiveData<String?>()
     val cultura: LiveData<String?> = _cultura
+
     private val _fase = MutableLiveData<String?>()
     val fase: LiveData<String?> = _fase
 
 
     fun getLatitude() {
         viewModelScope.launch {
-            _latitude.value = repository.getLatitude()
+            _latitude.value = repositoryConfig.getLatitude()
         }
     }
 
     fun alterarLatitude(latitude: Double) {
         viewModelScope.launch {
-            repository.setLatitude(latitude, callback = { ok ->
+            repositoryConfig.setLatitude(latitude, callback = { ok ->
                 _latitude.value = latitude
             })
         }
@@ -56,14 +62,14 @@ class ConfigViewModel : ViewModel() {
     }
 
     fun getCultura() {
-        repository.getCultura { cultura ->
+        repositoryConfig.getCultura { cultura ->
             _listCultura.value = cultura
             Log.d("Cultura", cultura.toString())
         }
     }
 
     fun alterarTipoCultura(tipoCultura: String, fase: String) {
-        repository.getKc(tipoCultura) { dadosKc ->
+        repositoryConfig.getKc(tipoCultura) { dadosKc ->
             if (dadosKc != null) {
                 val kcSelecionado = when (fase) {
                     "Fase 1" -> dadosKc.kc1
@@ -74,8 +80,8 @@ class ConfigViewModel : ViewModel() {
                 }
 
                 viewModelScope.launch {
-                    repository.setPlantio(tipoCultura, fase)
-                    repository.setKc(kcSelecionado)
+                    repositoryConfig.setPlantio(tipoCultura, fase)
+                    repositoryConfig.setKc(kcSelecionado)
 
                 }
             }
@@ -83,7 +89,7 @@ class ConfigViewModel : ViewModel() {
     }
 
     fun getDados(){
-        repository.getDadosCultura { cultura, fase ->
+        repositoryConfig.getDadosCultura { cultura, fase ->
             _cultura.value = cultura
             _fase.value = fase
         }

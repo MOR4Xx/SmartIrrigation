@@ -1,33 +1,42 @@
 package com.ifmaker.smartirrigation.ui.ViewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ifmaker.smartirrigation.data.Model.CoeficienteCultura
 import com.ifmaker.smartirrigation.data.Model.ParametrosIrrigacao
 import com.ifmaker.smartirrigation.data.Model.UltimaIrrigacao
 import com.ifmaker.smartirrigation.data.Repository.ConfigRepository
 import com.ifmaker.smartirrigation.data.Repository.UltimaIrrigacaoRepository
+import com.ifmaker.smartirrigation.data.Repository.UsuarioRepository
 import kotlinx.coroutines.launch
 
 class IrrigacaoViewModel : ViewModel() {
 
     private lateinit var cultura: String
     private lateinit var fase: String
-    private lateinit var coeficienteCultura: CoeficienteCultura
 
-    private val repository = UltimaIrrigacaoRepository()
+    private val repositoryUltimaIrrigacao = UltimaIrrigacaoRepository()
     private val repositoryConfig = ConfigRepository()
+    private val repositoryUsuario = UsuarioRepository()
+
     private val _ultimaIrrigacao = MutableLiveData<UltimaIrrigacao>()
     val ultimaIrrigacao: LiveData<UltimaIrrigacao> = _ultimaIrrigacao
+
     private val _parametrosIrrigacao = MutableLiveData<ParametrosIrrigacao>()
     val parametrosIrrigacao: LiveData<ParametrosIrrigacao> = _parametrosIrrigacao
+
+    private val _modoIrrigacao = MutableLiveData<Boolean>()
+    val modoIrrigacao: LiveData<Boolean> = _modoIrrigacao
+
+    private val _permissao = MutableLiveData<Boolean>()
+    val permissao: LiveData<Boolean> = _permissao
 
 
     fun getUltimaIrrigacao() {
         viewModelScope.launch {
-            repository.getUltimaIrrigacao { it ->
+            repositoryUltimaIrrigacao.getUltimaIrrigacao {
                 _ultimaIrrigacao.value = it
             }
         }
@@ -36,6 +45,16 @@ class IrrigacaoViewModel : ViewModel() {
     fun setModoIrrigacao(modo: String) {
         viewModelScope.launch {
             repositoryConfig.setModoIrrigacao(modo)
+        }
+    }
+
+    fun getModoIrrigacao() {
+        repositoryConfig.getModoIrrigacao {
+            if (it == "manual") {
+                _modoIrrigacao.value = true
+            } else {
+                _modoIrrigacao.value = false
+            }
         }
     }
 
@@ -97,6 +116,17 @@ class IrrigacaoViewModel : ViewModel() {
     fun setAutorizacaoIrrigacaoAutomatica(autorizacao: Boolean) {
         viewModelScope.launch {
             repositoryConfig.setAutorizacaoIrrigacaoAutomatica(autorizacao)
+        }
+    }
+
+    fun getPermissao() {
+        repositoryUsuario.getPermissao { perm ->
+            if (perm == "Administrador") {
+                _permissao.value = true
+            } else {
+                _permissao.value = false
+            }
+            Log.d("PERMISSAO", perm.toString())
         }
     }
 }

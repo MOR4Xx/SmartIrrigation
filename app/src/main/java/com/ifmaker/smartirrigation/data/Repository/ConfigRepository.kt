@@ -132,6 +132,18 @@ class ConfigRepository {
             }
     }
 
+    fun getModoIrrigacao(callback: (String) -> Unit) {
+        db.collection(collectionPath).document(documentId).get()
+            .addOnSuccessListener { document ->
+                val modo = document.getString("modo")
+                if (modo != null) {
+                    callback(modo)
+                }
+            }.addOnFailureListener { e ->
+                Log.e("Firestore", "Erro ao obter modo de Irrigação", e)
+            }
+    }
+
     fun setAutorizacaoIrrigacaoAutomatica(autorizacao: Boolean) {
         val docRef = db.collection(collectionPath).document(documentId)
         docRef.update("autorizacao", autorizacao)
@@ -172,6 +184,7 @@ class ConfigRepository {
                 Log.e("Firebase", "Erro ao atualizar KC", e)
             }
     }
+
 }
 
 
