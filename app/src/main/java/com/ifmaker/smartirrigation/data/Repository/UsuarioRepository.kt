@@ -83,5 +83,38 @@ class UsuarioRepository() {
             }
     }
 
+    fun atualizarPerfil(novoNome: String, novaSenha: String, onResult: (Boolean, String) -> Unit) {
+        val user = auth.currentUser
 
+        if (user == null) {
+            onResult(false, "Usuário não está logado.")
+            return
+        }
+
+        val updates = hashMapOf<String, Any>("nome" to novoNome)
+
+        db.collection("usuarios").document(user.uid)
+            .update(updates)
+            .addOnSuccessListener {
+                if (novaSenha.isNotEmpty()) {
+                    user.updatePassword(novaSenha)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                onResult(true, "Perfil e senha atualizados com sucesso!")
+                            } else {
+                                onResult(
+                                    false,
+                                    "Nome salvo, mas erro ao mudar senha: ${task.exception?.message}"
+                                )
+                            }
+                        }
+                } else {
+                    onResult(true, "Nome atualizado com sucesso!")
+                }
+            }
+            .addOnFailureListener { e ->
+                onResult(false, "Erro ao atualizar dados: ${e.message}")
+            }
+
+    }
 }

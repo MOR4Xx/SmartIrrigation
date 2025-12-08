@@ -25,6 +25,7 @@ import com.ifmaker.smartirrigation.R
 import com.ifmaker.smartirrigation.data.Model.OptionMenu
 import com.ifmaker.smartirrigation.databinding.FragmentConfigBinding
 import com.ifmaker.smartirrigation.ui.Activity.CadastroUserActivity
+import com.ifmaker.smartirrigation.ui.Activity.EditarPerfil
 import com.ifmaker.smartirrigation.ui.Activity.LoginActivity
 import com.ifmaker.smartirrigation.ui.ViewModel.ConfigViewModel
 
@@ -110,11 +111,17 @@ class ConfigFragment : Fragment() {
                     "Latitude do Sistema" -> alterarLatitude()
                     "Tipo de Plantio" -> alterarTipoPlantio()
                     "Adicionar Novo Usuario" -> adicionarNovoUsuario()
+                    "Editar Perfil" -> editarPerfil()
                     "Logout" -> logout()
                     else -> Log.d("CLICK_TEST", "Nenhuma ação associada")
                 }
             }
         }
+    }
+
+    private fun editarPerfil(){
+        val intent = Intent(requireContext(), EditarPerfil::class.java)
+        startActivity(intent)
     }
 
     private fun alterarLatitude() {
