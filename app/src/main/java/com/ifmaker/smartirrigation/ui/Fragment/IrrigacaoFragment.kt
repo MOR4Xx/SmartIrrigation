@@ -130,19 +130,19 @@ class IrrigacaoFragment : Fragment() {
             mostrarSnackbar(it, msg)
         }
 
-        btnAtivarManual.setOnClickListener {
-            if (volumeAguaSelecionado <= 0) return@setOnClickListener
-
-            viewModel.setQuantidadeAguaManual(volumeAguaSelecionado)
-            mostrarSnackbar(requireView(), "Irrigação Iniciada")
-
-            iniciarTimerIrrigacao(volumeAguaSelecionado)
-
-            btnAtivarManual.isEnabled = false
-            btnAtivarManual.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_border)
-            btnAtivarManual.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
-
-        }
+//        btnAtivarManual.setOnClickListener {
+//            if (volumeAguaSelecionado <= 0) return@setOnClickListener
+//
+//            viewModel.setQuantidadeAguaManual(volumeAguaSelecionado)
+//            mostrarSnackbar(requireView(), "Irrigação Iniciada")
+//
+//            iniciarTimerIrrigacao(volumeAguaSelecionado)
+//
+//            btnAtivarManual.isEnabled = false
+//            btnAtivarManual.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_border)
+//            btnAtivarManual.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+//
+//        }
 
     }
     private fun popupParametros() {
@@ -286,6 +286,12 @@ class IrrigacaoFragment : Fragment() {
             if (volumeAguaSelecionado > 0) {
                 viewModel.setQuantidadeAguaManual(volumeAguaSelecionado)
                 mostrarSnackbar(it, "Irrigação ativada com sucesso!")
+
+                iniciarTimerIrrigacao(volumeAguaSelecionado)
+
+                btnAtivarManual.isEnabled = false
+                btnAtivarManual.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_border)
+                btnAtivarManual.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
             }
         }
     }
